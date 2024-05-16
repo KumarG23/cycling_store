@@ -26,7 +26,7 @@ class Vehicle(models.Model):
 
 
 class Customer(models.Model):
-    name = models.TextField()
+    name = models.TextField(unique=False)
 
     def __str__(self):
         return f'name: {self.name}'

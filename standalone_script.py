@@ -56,6 +56,9 @@ from cycling_store_app.models import *
 # color_type = Color(name='Blue')
 # color_type.save()
 
+# customer = Customer.objects.filter(name='Neal Sharma').first()
+# customer.delete()
+
 # green, red, orange, blue
 
 
@@ -90,28 +93,28 @@ from cycling_store_app.models import *
 
 print('**********MENU**********')
 print()
-choice = input('What would you like to do? \nAdd to vehicles stock (1)  \nOrder a vehicle (2) \nDisplay inventory (3) \nCancel a customer order (4) \nMark order as paid (5) \nShow all orders (6)\n')
-
+choice = input('What would you like to do? \nAdd vehicles or handlebars to stock (1)  \nOrder a vehicle (2) \nDisplay inventory (3) \nCancel a customer order (4) \nMark order as paid (5) \nShow all orders (6)\n') #\n makes new line
+        # if not a number in choices
 while choice not in ['1', '2', '3', '4', '5', '6']:
     choice = input('Please select the number associated with the action you would like to take.')
 
 if choice == '1':
-    choice = input('Which type of vehicle would you like to add?\nUnicycle (1) \nBicycle (2) \nTricycle (3) \nGolden Handlebar (4) \nFrilly Handlebar (5) \nChopper Handlebar (6): ')
+    choice = input('Which type of vehicle or Handlebar would you like to add?\nUnicycle (1) \nBicycle (2) \nTricycle (3) \nGolden Handlebar (4) \nFrilly Handlebar (5) \nChopper Handlebar (6): ')
     while choice not in ['1', '2', '3','4', '5', '6']:
         choice = input('Please select the number associated with the type of vehicle you want to add to stock (1, 2, or 3)')
     if choice == '1':
-        unis = input('How many Unicycles would you like to add?   ')
+        unis = input('How many Unicycles would you like to add? ') # if not a number
         while not unis.isdigit():
             unis = input('Please enter a valid number: ')
-
+            # the number entered for unis = unis
         unis = int(unis)
-
+        # filter for just unicycle
         unicycles = Vehicle.objects.filter(type='unicycle')
         for unicycle in unicycles:
             unicycle.number_in_stock += unis
             unicycle.save()
 
-        print(f'{unis} Unicycles added to stock successfully!')
+        print(f'{unis} Unicycles added to stock successfully!🛞')
     if choice == '2':
         bikes = input('How many bicycles would you like to add? ')
         while not bikes.isdigit():
@@ -121,10 +124,10 @@ if choice == '1':
 
         bicycles = Vehicle.objects.filter(type='bicycle')
         for bicycle in bicycles:
-            bicycle.number_in_stock += bikes
+            bicycle.number_in_stock += bikes # add to bikes stock
             bicycle.save()
 
-        print(f'{bikes} Bicycles added to stock successfully!')
+        print(f'{bikes} Bicycles added to stock successfully!🚲')
 
     if choice == '3':
         tri = input('How many tricycles would you like to add? ')
@@ -139,7 +142,7 @@ if choice == '1':
             tricycle.number_in_stock += tri
             tricycle.save()
 
-        print(f'{tri} Tricycles added to stock successfully!')
+        print(f'{tri} Tricycles added to stock successfully!🛺')
     
     if choice == '4':
         gold = input('How many Golden Handlebars would you like to add? ')
@@ -154,7 +157,7 @@ if choice == '1':
             golden_handle.handlebars_in_stock += gold
             golden_handle.save()
 
-        print(f'{gold} Golden Handlebars added to stock successfully!')
+        print(f'{gold} Golden Handlebars added to stock successfully!🌟')
 
     if choice == '5':
         frilly = input('How many Frilly Handlebars would you like to add? ')
@@ -169,7 +172,7 @@ if choice == '1':
             frilly_handle.handlebars_in_stock += frilly
             frilly_handle.save()
 
-        print(f'{frilly} Frilly Handlebars added to stock successfully!')
+        print(f'{frilly} Frilly Handlebars added to stock successfully!🎀')
 
     if choice == '6':
         chopper = input('How many Chopper Handlebars would you like to add? ')
@@ -184,7 +187,7 @@ if choice == '1':
             chopper_handle.handlebars_in_stock += chopper
             chopper_handle.save()
 
-        print(f'{chopper} Chopper Handlebars added to stock successfully!')
+        print(f'{chopper} Chopper Handlebars added to stock successfully!🛵')
 
         
 
