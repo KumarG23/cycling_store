@@ -18,7 +18,7 @@ class Color(models.Model):
 class Vehicle(models.Model):
     type = models.TextField()
     number_in_stock = models.PositiveIntegerField()
-    handlebar = models.ForeignKey(Handlebar, on_delete=models.SET_NULL, null=True, blank=True)
+    handlebar = models.ForeignKey(Handlebar, on_delete=models.SET_NULL, null=True, blank=True) # where i had orders already made before making the customizations i had to have something to show in the customization options for those orders. 
     color = models.ForeignKey(Color, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
@@ -26,7 +26,7 @@ class Vehicle(models.Model):
 
 
 class Customer(models.Model):
-    name = models.TextField(unique=False)
+    name = models.TextField(unique=False) # makes it so that one customer can have multiple orders
 
     def __str__(self):
         return f'name: {self.name}'

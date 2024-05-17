@@ -94,24 +94,24 @@ from cycling_store_app.models import *
 print('**********MENU**********')
 print()
 choice = input('What would you like to do? \nAdd vehicles or handlebars to stock (1)  \nOrder a vehicle (2) \nDisplay inventory (3) \nCancel a customer order (4) \nMark order as paid (5) \nShow all orders (6)\n') #\n makes new line
-        # if not a number in choices
+        # if not a number in choices 
 while choice not in ['1', '2', '3', '4', '5', '6']:
     choice = input('Please select the number associated with the action you would like to take.')
 
-if choice == '1':
+if choice == '1': # add to stock
     choice = input('Which type of vehicle or Handlebar would you like to add?\nUnicycle (1) \nBicycle (2) \nTricycle (3) \nGolden Handlebar (4) \nFrilly Handlebar (5) \nChopper Handlebar (6): ')
     while choice not in ['1', '2', '3','4', '5', '6']:
         choice = input('Please select the number associated with the type of vehicle you want to add to stock (1, 2, or 3)')
     if choice == '1':
         unis = input('How many Unicycles would you like to add? ') # if not a number
-        while not unis.isdigit():
+        while not unis.isdigit(): # input must be a number
             unis = input('Please enter a valid number: ')
             # the number entered for unis = unis
         unis = int(unis)
         # filter for just unicycle
         unicycles = Vehicle.objects.filter(type='unicycle')
         for unicycle in unicycles:
-            unicycle.number_in_stock += unis
+            unicycle.number_in_stock += unis # add number to stock
             unicycle.save()
 
         print(f'{unis} Unicycles added to stock successfully!🛞')
@@ -197,7 +197,7 @@ elif choice == '2':
 
     customer_name = input('Enter your name: ')
     customer, created= Customer.objects.get_or_create(name=customer_name)
-
+    # get or create makes it so that if your customer already exists it does not make a new customer but if the customer does not exist it makes a new customer.
 
     choice = input('What type of vehicle would you like? / Unicycle(1) / Bicycle(2) / Tricycle(3): ')
     while choice not in ['1', '2', '3']:
@@ -240,13 +240,17 @@ elif choice == '2':
     color = Color.objects.get(name=color_choice)
 
     vehicle, created = Vehicle.objects.get_or_create(type=vehicle_type)
+    # vehicle, created because i used get or create
+    # vehicle = vehicle instance ( existing or new)
+    # created is true if a new vehicle was created if not created is false and it just gets the vehicle instead.
 
     vehicle.number_in_stock -=1
     vehicle.save()
 
 
 
-    CustomerOrder.objects.create(
+
+    CustomerOrder.objects.create( # create the new order
         customer=customer,
         order=vehicle,
         color=color,
@@ -260,7 +264,7 @@ elif choice == '2':
 
 elif choice == '3':
     print()
-    print('**********STOCK**********')
+    print('**********STOCK**********') # show all stock
     vehicles = Vehicle.objects.all()
     handles = Handlebar.objects.all()
 
@@ -270,16 +274,18 @@ elif choice == '3':
         print(f'{handle.name}: {handle.handlebars_in_stock}')
 
 elif choice == '4':
-    order_to_cancel = input('Which order would you like to cancel (order ID): ')
+    order_to_cancel = input('Which order would you like to cancel (order ID): ') # cancel order by order id
     
     while not order_to_cancel.isdigit():
         order_to_cancel = input('Please enter your order ID number: ')
 
-    order = CustomerOrder.objects.filter(id=order_to_cancel).first()
+    order = CustomerOrder.objects.filter(id=order_to_cancel).first() # filter customer orders and find the id that was entered
     
     if order:
-        order.order.number_in_stock += 1
+        order.order.number_in_stock += 1 # add vehicle back to stock
+        order.handlebar.handlebars_in_stock += 1
         order.order.save()
+        order.handlebar.save()
         order.delete()
         print('Order successfully deleted and stock updated!')
     else:
