@@ -16,6 +16,23 @@ class CustomerOrderSerializer(serializers.ModelSerializer):
         model = CustomerOrder
         fields = ['id', 'customer', 'order', 'created_date', 'paid']
 
+    def create(self, validated_data):
+        vehicle = validated_data.get('order')
+        handlebar = validated_data.get('handlebar')
+
+        if vehicle.number_in_stock > 0 and handlebar.handlebars_in_stock > 0:
+            vehicle.number_in_stock -= 1
+            handlebar.handlebars_in_stock -= 1
+
+            vehicle.save()
+            handlebar.save()
+
+            order = CustomerOrder.objects.create(**validated_data)
+            return order
+        
+        else:
+            raise serializers.ValidationError('Insufficient Stock')
+
 class HandlebarSerializer(serializers.ModelSerializer):
     class Meta:
         model = Handlebar

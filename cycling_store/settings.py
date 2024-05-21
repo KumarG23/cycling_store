@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_extensions',
     'rest_framework',
     'cycling_store_app'
 ]
@@ -52,6 +53,13 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'cycling_store.urls'
+
+GRAPH_MODELS = {
+    'all_applications': True,
+    'group_models': True,  # Include models from the same app in the same box
+    'output': 'my_project.dot',  # Output file for the graph
+}
+
 
 TEMPLATES = [
     {
